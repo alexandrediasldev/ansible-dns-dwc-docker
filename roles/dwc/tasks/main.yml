@@ -1,0 +1,61 @@
+#- name: Update apt docker
+#  become: yes
+#  apt:
+#    name: ["python3-pip","docker.io","docker-compose","python-docker","python3-docker"]
+#    state: latest
+#- name: Update apt docker
+#  become: yes
+#  pip:
+#    name: ["docker-compose"]
+#    state: latest
+- name: Example clone of a single branch
+  ansible.builtin.git:
+    repo: https://github.com/alexandrediasldev/dwc-docker
+    dest: /dwc-docker/
+    single_branch: yes
+    version: main
+
+      #- name: Tear down existing services
+      #  community.docker.docker_compose:
+      #    project_src: dwc-docker
+      #    state: absent
+
+- name: Create and start services
+  community.docker.docker_compose:
+    project_src: /dwc-docker/
+  register: output
+
+#- ansible.builtin.debug:
+#    var: output
+
+#- name: Run `docker-compose up` again
+#  community.docker.docker_compose:
+#    project_src: dwc-docker
+#    build: false
+#  register: output
+
+#- ansible.builtin.debug:
+#    var: output
+
+#- ansible.builtin.assert:
+#    that: not output.changed
+
+#- name: Stop all services
+#  community.docker.docker_compose:
+#    project_src: dwc-docker
+#    build: false
+#    stopped: true
+#  register: output
+
+#- ansible.builtin.debug:
+#    var: output
+#
+#- name: Restart services
+#  community.docker.docker_compose:
+#    project_src: dwc-docker
+#    build: false
+#    restarted: true
+#  register: output
+
+#- ansible.builtin.debug:
+#    var: output

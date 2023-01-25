@@ -1,0 +1,56 @@
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    upgrade: yes
+    update_cache: yes
+
+- name: pip self-update
+  pip:
+    name: pip
+    state: latest
+
+- name: Add Docker Repository
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - ca-certificates
+    - curl
+    - gnupg
+    - lsb-release
+
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: install pip3
+  apt: name=python3-pip state=present
+
+- name: Add Docker Repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu xenial stable
+    state: present
+
+- name: Add Docker Repository
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+    - docker-compose
+
+- name: Install Docker Module for Python
+  pip:
+    name: docker
+
+- name: adding existing user '{{ user }}' to group sudo
+  user:
+    name: '{{ user }}'
+    groups: docker
+    append: yes
+- name: install docker compose
+  pip:
+    name: docker-compose

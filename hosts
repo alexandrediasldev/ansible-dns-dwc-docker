@@ -1,0 +1,10 @@
+[dns]
+dns-1 ansible_host=10.10.0.102
+[dwc]
+dwc-1 ansible_host=10.10.0.101
+
+[all:vars]
+ansible_user=tcom
+ansible_ssh_pass=tcom
+ansible_sudo_pass=tcom
+ansible_become=yes

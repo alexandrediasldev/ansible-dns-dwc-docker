@@ -1,0 +1,4 @@
+ip_dwc_docker: "10.10.0.101"
+ip_dns: "10.10.0.102"
+static_ip_dns: '10.10.0.102/24'
+interface_name: "ens18"
